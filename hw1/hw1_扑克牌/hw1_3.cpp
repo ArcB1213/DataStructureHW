@@ -65,21 +65,27 @@ string judge_Num(char n)
 	return s[n - 1];
 }
 
-L* insert(L *in,L *src,char e)
+L* insert(L *in,L **src,char e)
 {
-	L* n = src;
-	L* p = src;
-	while (p) {
-		if (p->next) {
-			if ((p->next->elem.num) > e) {
-				n = p->next;
-				p->next = in;
-				break;
-			}
+	L* n = *src;
+	L* Hnode = (L*)malloc(sizeof(L));
+	Hnode->next = *src;
+	*src = Hnode;
+	L* p = *src;
+	while (p->next) {
+		if ((p->next->elem.num) > e) {
+			n = p->next;
+			p->next = in;
+			break;
 		}		
 		p = p->next;
 	}
-	
+	if (!(p->next)) {
+		n = NULL;
+		p->next = in;
+	}
+	*src = Hnode->next;
+	free(Hnode);
 	return n;
 }
 
@@ -116,28 +122,27 @@ int main()
 			if (head) {
 				char need = judge_pattern(pattern);
 				L* sort_h = NULL;
+				L* Node = (L*)malloc(sizeof(L));
+				Node->next = head;
+				head = Node;
 				L* p = head;
-				while (p) {
+				while (p->next) {
 					L* q = p->next;
-					if (q) {
-						if (q->elem.pattern == need) {
-							p->next = q->next;
-							if (sort_h) {
-								q->next = insert(q, sort_h, q->elem.num);
-								if (q->next == sort_h)
-									sort_h = q;
-							}
-							else {
-								sort_h = q;
-								q->next = NULL;
-							}
+					if (q->elem.pattern == need) {
+						p->next = q->next;
+						if (sort_h) {
+							q->next = insert(q, &sort_h, q->elem.num);
 						}
-						else
-							p = q;
+						else {
+							sort_h = q;
+							q->next = NULL;
+						}
 					}
 					else
-						break;
+						p = q;
 				}
+				head = Node->next;
+				free(Node);
 				//排序数组与原数组首尾相接
 				if (sort_h) {
 					L* sort_end = sort_h;
