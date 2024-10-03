@@ -1,7 +1,6 @@
 #include<iostream>
 using namespace std;
 
-#define Test 76
 struct num {
 	char* elem;
 	unsigned int length;
@@ -66,19 +65,6 @@ void L_multiply(num &m1, num m2)
 			}
 		}
 
-	/*for (char* p = result.elem + result.length - 1; p > result.elem && result.length > 1; p--) {
-		if (!*p) {
-			char* newbase = (char*)realloc(result.elem, (result.length - 1) * sizeof(char));
-			if (!newbase) {
-				cout << "wrong" << endl;
-				exit(EOVERFLOW);
-			}
-			result.elem = newbase;
-			result.length--;
-		}
-		else
-			break;
-	}*/
 	while (result.length > 1 && !result.elem[result.length - 1])
 		result.length--;
 
@@ -131,68 +117,23 @@ int main()
 	now.elem[0] = 0;
 	now.length = 1;
 
-	/*cout << "E=";
-	for (int i = E.length - 1; i >= 0; i--)
-		cout << char('0' + E.elem[i]);
-	cout << endl;
-	cout << "E.length=" << E.length << endl;*/
-
 	for (int i = 1; i <= N; i++) {
 		num F;
 		F.elem = (char*)malloc(sizeof(char));
 		F.elem[0] = 0;
 		F.length = 0;
 		Int_to_digit(i, F);
-		/*if (i >= Test) {
-			cout << "F=";
-			for (int i = F.length - 1; i >= 0; i--)
-				cout << char('0' + F.elem[i]);
-			cout << endl;
-			cout << "F.length=" << F.length << endl;
-		}*/
+
 		if (i > 1)
 			L_multiply(exp, E);
-		/*if (i >= Test) {
-			cout << "exp=";
-			for (int i = exp.length - 1; i >= 0; i--)
-				cout << char('0' + exp.elem[i]);
-			cout << endl;
-		 }*/
 
 		L_give(exp, now);		
 		L_multiply(now, F);
-		/*if (i >= Test) {
-			cout << "now=";
-			for (int i = now.length - 1; i >= 0; i--)
-				cout <<char('0' + now.elem[i]);
-			cout << endl;
-		}*/
 
 		L_add(sum, now);
-		/*if (i >= Test) {
-			cout << "sum=";
-			for (int i = sum.length - 1; i >= 0; i--)
-				cout <<char('0' + sum.elem[i]);
-			cout << endl;
-		}*/
 		free(F.elem);
 	}
 
-	//ÄæÐòÊä³ösumÊý×é
-	/*for (char* p = sum.elem + sum.length - 1; p > sum.elem && sum.length > 1; p--) {
-		if (!*p) {
-			char* newbase = (char*)realloc(sum.elem, (sum.length - 1) * sizeof(char));
-			if (!newbase) {
-				cout << "wrong" << endl;
-				exit(EOVERFLOW);
-			}
-				
-			sum.elem = newbase;
-			sum.length--;
-		}
-		else
-			break;
-	}*/
 	for (char* p = sum.elem + sum.length - 1; p >= sum.elem; p--)
 		cout << char('0' + *p);
 	cout << endl;
