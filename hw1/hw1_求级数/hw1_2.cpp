@@ -78,7 +78,7 @@ num L_multiply(num m1, num m2)
 num L_add(num a1, num a2)
 {
 	num result;
-	result.length = a1.length + a2.length;
+	result.length = max(a1.length, a2.length) + 1;
 	result.elem = (char*)malloc(result.length * sizeof(char));
 	for (int i = 0; i < result.length; i++)
 		result.elem[i] = 0;
