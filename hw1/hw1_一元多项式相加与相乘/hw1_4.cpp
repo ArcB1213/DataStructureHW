@@ -117,22 +117,6 @@ int main()
 		cin >> p->coef >> p->expn;
 	}
 
-	/*cout << "P1=";
-	paCur = pa->next;
-	while (paCur) {
-		cout << paCur->coef << ' ' << paCur->expn << ' ';
-		paCur = paCur->next;
-	}
-	cout << endl;*/
-
-	/*cout << "P2=";
-	pbCur = pb->next;
-	while (pbCur) {
-		cout << pbCur->coef << ' ' << pbCur->expn << ' ';
-		pbCur = pbCur->next;
-	}
-	cout << endl;*/
-
 	int opr;
 	cin >> opr;
 	if (opr == 0) {

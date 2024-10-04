@@ -11,6 +11,8 @@ Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "Project1", "Project1\Projec
 EndProject
 Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "hw1_一元多项式相加与相乘", "hw1_一元多项式相加与相乘\hw1_一元多项式相加与相乘.vcxproj", "{1AB70502-8CC4-4F99-9979-61A1ACDF5AB6}"
 EndProject
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "hw1_学生信息管理", "hw1_学生信息管理\hw1_学生信息管理.vcxproj", "{368E6E76-89BF-422B-A3AA-A805856FE979}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|x64 = Debug|x64
@@ -51,6 +53,14 @@ Global
 		{1AB70502-8CC4-4F99-9979-61A1ACDF5AB6}.Release|x64.Build.0 = Release|x64
 		{1AB70502-8CC4-4F99-9979-61A1ACDF5AB6}.Release|x86.ActiveCfg = Release|Win32
 		{1AB70502-8CC4-4F99-9979-61A1ACDF5AB6}.Release|x86.Build.0 = Release|Win32
+		{368E6E76-89BF-422B-A3AA-A805856FE979}.Debug|x64.ActiveCfg = Debug|x64
+		{368E6E76-89BF-422B-A3AA-A805856FE979}.Debug|x64.Build.0 = Debug|x64
+		{368E6E76-89BF-422B-A3AA-A805856FE979}.Debug|x86.ActiveCfg = Debug|Win32
+		{368E6E76-89BF-422B-A3AA-A805856FE979}.Debug|x86.Build.0 = Debug|Win32
+		{368E6E76-89BF-422B-A3AA-A805856FE979}.Release|x64.ActiveCfg = Release|x64
+		{368E6E76-89BF-422B-A3AA-A805856FE979}.Release|x64.Build.0 = Release|x64
+		{368E6E76-89BF-422B-A3AA-A805856FE979}.Release|x86.ActiveCfg = Release|Win32
+		{368E6E76-89BF-422B-A3AA-A805856FE979}.Release|x86.Build.0 = Release|Win32
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
