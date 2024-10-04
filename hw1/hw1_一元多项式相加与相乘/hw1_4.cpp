@@ -54,6 +54,40 @@ Polynomial* add_polyn(Polynomial *P1,Polynomial *P2)
 	return Psum;
 }
 
+Polynomial* product(Polynomial* p, Polynomial* pa, Polynomial* pb)
+{
+	Polynomial* qm = (Polynomial*)malloc(sizeof(Polynomial));
+	p->next = qm;
+	qm->next = NULL;
+	qm->coef = pa->coef * pb->coef;
+	qm->expn = pa->expn + pb->expn;
+	p = qm;
+	return p;
+}
+
+Polynomial* multiply_polyn(Polynomial* P1, Polynomial* P2, int n)
+{
+	Polynomial** Mul = (Polynomial**)calloc(n, sizeof(Polynomial*));
+	Polynomial* pa = P1->next, * pb = P2->next;
+	//A(x)与bi相乘，得出n个多项式
+	for (int i = 0; i < n; i++) {
+		Polynomial* pm = (Polynomial*)malloc(sizeof(Polynomial));
+		Mul[i] = pm;
+		pm->next = NULL;
+		pa = P1->next;
+		while (pa) {
+			pm = product(pm, pa, pb);
+			pa = pa->next;
+		}
+		pb = pb->next;
+	}
+	Polynomial* Production;
+	Production = Mul[0];
+	for (int i = 1; i < n; i++)
+		Production = add_polyn(Production, Mul[i]);
+	return Production;
+}
+
 int main()
 {
 	int n, m;
@@ -107,6 +141,32 @@ int main()
 		while (qs) {
 			cout << qs->coef << ' ' << qs->expn << ' ';
 			qs = qs->next;
+		}
+		cout << endl;
+	}
+	else if (opr == 1) {
+		Polynomial* Pp = multiply_polyn(P1, P2, n);
+		Polynomial* qp = Pp->next;
+		while (qp) {
+			cout << qp->coef << ' ' << qp->expn << ' ';
+			qp = qp->next;
+		}
+		cout << endl;
+	}
+	else if (opr == 2) {
+		Polynomial* Psum = add_polyn(P1, P2);
+		Polynomial* qs = Psum->next;
+		while (qs) {
+			cout << qs->coef << ' ' << qs->expn << ' ';
+			qs = qs->next;
+		}
+		cout << endl;
+
+		Polynomial* Pp = multiply_polyn(P1, P2, n);
+		Polynomial* qp = Pp->next;
+		while (qp) {
+			cout << qp->coef << ' ' << qp->expn << ' ';
+			qp = qp->next;
 		}
 		cout << endl;
 	}
