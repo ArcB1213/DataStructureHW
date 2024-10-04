@@ -33,8 +33,10 @@ void insert(S &L, int I,string name,string no)
 	L.s = newbase;
 	L.length++;
 
-	for (int i = L.length - 2; i >= I; i--)
-		L.s[i + 1] = L.s[i];
+	if (I <= L.length - 2) {
+		for (int i = L.length - 2; i >= I; i--)
+			L.s[i + 1] = L.s[i];		
+	}
 	L.s[I].no = no;
 	L.s[I].name = name;
 }
@@ -92,7 +94,7 @@ int main()
 		if (opr == "insert") {
 			int I;
 			cin >> I;
-			if (I >= 1 && I <= students.length - 1) {
+			if (I >= 1 && I <= students.length) {
 				string name, no;
 				cin >> no >> name;
 				insert(students, I, name, no);
