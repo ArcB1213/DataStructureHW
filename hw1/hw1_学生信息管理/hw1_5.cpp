@@ -2,16 +2,19 @@
 #include<string>
 using namespace std;
 
+//学生信息结构体，顺序表中的数据元素
 struct info {
 	string no;
 	string name;
 };
 
+//顺序表
 struct S {
-	info* s;
-	int length;
+	info* s;//顺序表指针
+	int length;//顺序表长度
 };
 
+//重新分配空间函数，实现与realloc类似的功能
 info* renew(info* p, int oldsize, int newsize)
 {
 	info* pnew = new(nothrow) info[newsize];
@@ -23,41 +26,49 @@ info* renew(info* p, int oldsize, int newsize)
 	return p;
 }
 
-void insert(S &L, int I,string name,string no)
+// 插入元素操作
+void insert(S &L, int I, string name, string no)
 {
-	info* newbase = renew(L.s,L.length,L.length+1);
-	if (!newbase) {
-		cout << "wrong" << endl;
-		exit(EOVERFLOW);
-	}
-	L.s = newbase;
-	L.length++;
+    // 重新分配内存空间
+    info* newbase = renew(L.s, L.length, L.length + 1);
+    if (!newbase) {
+        cout << "wrong" << endl;
+        exit(EOVERFLOW);
+    }
+    L.s = newbase;
+    L.length++;
 
-	if (I <= L.length - 2) {
-		for (int i = L.length - 2; i >= I; i--)
-			L.s[i + 1] = L.s[i];		
-	}
-	L.s[I].no = no;
-	L.s[I].name = name;
+    // 将元素插入到指定位置
+    if (I <= L.length - 2) {
+        for (int i = L.length - 2; i >= I; i--)
+            L.s[i + 1] = L.s[i];
+    }
+    L.s[I].no = no;
+    L.s[I].name = name;
 }
 
+//删除元素操作
 void remove(S& L, int J)
 {
-	for (int j = J; j <= L.length - 2; j++)
-		L.s[j] = L.s[j + 1];
+    // 从指定位置开始，将后面的元素向前移动一位
+    for (int j = J; j <= L.length - 2; j++)
+        L.s[j] = L.s[j + 1];
 
-	info* newbase = renew(L.s, L.length, L.length - 1);
-	if (!newbase) {
-		cout << "wrong" << endl;
-		exit(EOVERFLOW);
-	}
-	L.s = newbase;
-	L.length--;
+    // 重新分配内存空间，将长度减一
+    info* newbase = renew(L.s, L.length, L.length - 1);
+    if (!newbase) {
+        cout << "wrong" << endl;
+        exit(EOVERFLOW);
+    }
+    L.s = newbase;
+    L.length--;
 }
 
+//按姓名检索元素
 int check_name(S L, string name)
 {
 	int loc = -1;
+	//遍历顺序表，找到则返回元素位置，否则返回-1
 	for (int i = 1; i <= L.length - 1; i++) {
 		if (L.s[i].name == name) {
 			loc = i;
@@ -67,9 +78,11 @@ int check_name(S L, string name)
 	return loc;
 }
 
+//按学号检索元素
 int check_no(S L, string no)
 {
 	int loc = -1;
+	//遍历顺序表，找到则返回元素位置，否则返回-1
 	for (int i = 1; i <= L.length - 1; i++) {
 		if (L.s[i].no == no) {
 			loc = i;

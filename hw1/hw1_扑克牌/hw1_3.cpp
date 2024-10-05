@@ -65,6 +65,7 @@ string judge_Num(char n)
 	return s[n - 1];
 }
 
+//实现牌号升序排序，牌堆顶（链表头部）到牌堆低（链表尾部）从小到大
 L* insert(L *in,L **src,char e)
 {
 	L* n = *src;
@@ -100,39 +101,45 @@ int main()
 	for (int c = 0; c < n; c++) {
 		string opr, pattern, Num;
 		cin >> opr;
-		if (opr == "Append") {
+        // Append操作：将新节点插入链表尾部
+        if (opr == "Append") {
 			cin >> pattern >> Num;
 			L* p = (L*)malloc(sizeof(L));
 			if (head) {
 				L* q = head;
 				while (q->next)
-					q=q->next;
+					q = q->next;
 				q->next = p;
 				p->next = NULL;
 			}
 			else {
 				p->next = NULL;
 				head = p;
-			}			
+			}
 			p->elem.pattern = judge_pattern(pattern);
 			p->elem.num = judge_num(Num);
 		}
+		//Extract功能的实现
 		else if (opr == "Extract") {
 			cin >> pattern;
 			if (head) {
 				char need = judge_pattern(pattern);
+				// 用于存储排序后的链表头节点
 				L* sort_h = NULL;
+				// 创建一个临时头节点，将其指向原链表头节点
 				L* Node = (L*)malloc(sizeof(L));
 				Node->next = head;
 				head = Node;
 				L* p = head;
+				//遍历链表，寻找花色匹配的牌
 				while (p->next) {
 					L* q = p->next;
-					if (q->elem.pattern == need) {
+					if (q->elem.pattern == need) {		//花色匹配
+						// 将节点从原链表中移除
 						p->next = q->next;
-						if (sort_h) {
+						if (sort_h)
+							// 将节点按照数字大小插入到排序链表中
 							q->next = insert(q, &sort_h, q->elem.num);
-						}
 						else {
 							sort_h = q;
 							q->next = NULL;
@@ -141,22 +148,25 @@ int main()
 					else
 						p = q;
 				}
+				// 将原链表头指针指向临时头节点的下一个节点，即去除临时头节点
 				head = Node->next;
 				free(Node);
-				//排序数组与原数组首尾相接
+				// 将排序链表与原链表首尾相接
 				if (sort_h) {
 					L* sort_end = sort_h;
 					while (sort_end->next)
-						sort_end = sort_end->next;					
+						sort_end = sort_end->next;
 					sort_end->next = head;
 					head = sort_h;
-				}								
+				}
 			}
 		}
+		//链表反转操作
 		else if (opr == "Revert") {
 			if (head) {
-				L* temp = head;
-				head = NULL;
+				L* temp = head;//生成一个临时指针，指向第一个节点
+				head = NULL;//将原头指针置为NULL，后续接一个反转链表
+				//循环操作，每次取出原链表的第一个元素并将其插入反转链表的头部，实现反转操作
 				while (temp) {
 					L* r = temp;
 					temp = temp->next;
@@ -165,6 +175,7 @@ int main()
 				}
 			}
 		}
+		//输出牌堆顶的扑克牌（链表第一个节点），同时销毁该节点链表
 		else if (opr == "Pop") {
 			if (head) {
 				L* p = head;
