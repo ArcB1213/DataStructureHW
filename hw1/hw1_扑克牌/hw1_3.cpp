@@ -2,15 +2,15 @@
 #include<string>
 using namespace std;
 
-
+//链表中的data个体
 struct CARD {
-	char num;
-	char pattern;
+	char num; // 卡片数字
+	char pattern; // 卡片花色
 };
-
+//链表节点
 struct L {
-	CARD elem;
-	L* next;
+	CARD elem; // 节点元素
+	L* next; // 下一个节点指针
 };
 
 char judge_pattern(string P)

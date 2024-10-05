@@ -16,7 +16,7 @@ int main()
 {
 	int n, k;
 	cin >> n >> k;
-	int* num = new int[n];
+	int* num = new int[n];//int型动态一维数组，属于顺序表
 	for (int* p = num; p - num < n; p++)
 		cin >> *p;
 	change(num, n, k);

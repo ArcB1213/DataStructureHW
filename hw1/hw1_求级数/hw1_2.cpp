@@ -1,9 +1,10 @@
 #include<iostream>
 using namespace std;
 
+//高精度算法对应的顺序表
 struct num {
-	char* elem;
-	unsigned int length;
+	char* elem;//char型数组
+	unsigned int length;//数组长度
 };
 
 void L_increace(num &L)
@@ -52,50 +53,60 @@ void Int_to_digit(int I, num &L) {
 //高精度乘法
 void L_multiply(num &m1, num m2)
 {
-	num result;
-	result.length = m1.length + m2.length;
-	result.elem = (char*)calloc(result.length, sizeof(char));
+    // 创建一个用于存储结果的结构体
+    num result;
+    result.length = m1.length + m2.length;
+    result.elem = (char*)calloc(result.length, sizeof(char)); 
 
-	for(unsigned int i=0;i<m1.length;i++)
-		for (unsigned int j = 0; j < m2.length; j++) {
-			result.elem[i + j] += m1.elem[i] * m2.elem[j];
-			if (result.elem[i + j] >= 10) {
-				result.elem[i + j + 1] += result.elem[i + j] / 10;
-				result.elem[i + j] %= 10;
-			}
-		}
+    for(unsigned int i=0;i<m1.length;i++) // 遍历第一个数的每一位
+        for (unsigned int j = 0; j < m2.length; j++) { // 遍历第二个数的每一位
+            result.elem[i + j] += m1.elem[i] * m2.elem[j]; // 将两个数的对应位相乘并累加到结果中
+			// 处理进位
+            if (result.elem[i + j] >= 10) { 
+                result.elem[i + j + 1] += result.elem[i + j] / 10; 
+                result.elem[i + j] %= 10; 
+            }
+        }
 
-	while (result.length > 1 && !result.elem[result.length - 1])
-		result.length--;
+	// 去除结果中的前导零
+    while (result.length > 1 && !result.elem[result.length - 1]) 
+        result.length--;
 
-	L_give(result, m1);
-	free(result.elem);
+    L_give(result, m1); // 将结果赋值给m1
+    free(result.elem);
 }
 
 //高精度加法
 void L_add(num &a1, num a2)
 {
-	num result;
-	result.length = max(a1.length, a2.length) + 1;
-	result.elem = (char*)malloc(result.length * sizeof(char));
-	for (unsigned int i = 0; i < result.length; i++)
-		result.elem[i] = 0;
-	unsigned int i = 0;
-	char carry = 0;
+    // 创建一个用于存储结果的结构体
+    num result;
+    result.length = max(a1.length, a2.length) + 1;
+    result.elem = (char*)malloc(result.length * sizeof(char));
+    for (unsigned int i = 0; i < result.length; i++)
+        result.elem[i] = 0;
+    unsigned int i = 0;
+    char carry = 0;
 
-	while (i < a1.length || i < a2.length || carry) {
-		if (i < a1.length)
-			carry += a1.elem[i];
-		if (i < a2.length) 
-			carry += a2.elem[i];
-		result.elem[i] = char(carry % 10);
-		carry /= 10;
-		i++;
-	}
-	while (result.length > 1 && !result.elem[result.length - 1])
-		result.length--;
-	L_give(result, a1);
-	free(result.elem);
+    // 逐位相加
+    while (i < a1.length || i < a2.length || carry) {
+        if (i < a1.length)
+            carry += a1.elem[i];
+        if (i < a2.length) 
+            carry += a2.elem[i];
+		//处理进位
+        result.elem[i] = char(carry % 10);
+        carry /= 10;
+        i++;
+    }
+
+    // 去除结果中的前导零
+    while (result.length > 1 && !result.elem[result.length - 1])
+        result.length--;
+
+    // 将结果赋值给a1
+    L_give(result, a1);
+    free(result.elem);
 }
 
 int main()
