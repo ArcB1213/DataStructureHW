@@ -20,15 +20,13 @@ struct Stack {
 
 int FindElem(char src, train L[], int length)
 {
-	int i = 0;
-	for (; i < length; i++) {
+	
+	for (int i = 0; i < length; i++) {
 		if (L[i].name == src)
-			break;
+			return i;
 	}
-	if (i < length)
-		return i;
-	else
-		return -1;
+
+	return -1;
 }
 
 int delete_head(Trains &T)
@@ -70,8 +68,11 @@ int Pop_Stack(Stack& S)
 			return -1;
 		S.wait = sp;
 	}
-	else
+	else {
 		free(S.wait);
+		S.wait = NULL;
+	}
+		
 
 	return 0;
 }
@@ -89,9 +90,6 @@ void copy_trains(const Trains src, Trains& dst)
 int main()
 {
 	Trains Init;
-	Init.t = (train*)malloc(3 * sizeof(train));
-	Init.size = 3;
-	Init.length = 0;
 	
 	//输入列车顺序
 	string ini_line;
@@ -105,33 +103,10 @@ int main()
 		Init.t[i].status = 0;
 	}
 
-/*	while (1) {
-		char temp = _getche();
-		if (temp != '\r') {
-			Init.length++;
-			if (Init.length > Init.size) {
-				Init.size = Init.length;
-				train* tp = (train*)realloc(Init.t, (Init.size) * sizeof(train));
-				if (tp == NULL)
-					return -1;
-				Init.t = tp;			
-			}
-			Init.t[Init.length - 1].name = temp;
-			Init.t[Init.length - 1].status = 0;
-		}
-		else
-			break;
-	}
-
-*/
 	string out;
 	while (cin >> out) {
 		Trains Temp;
 		copy_trains(Init, Temp);
-
-		//输入列车出站顺序
-		//char *out=(char*)malloc((Init.length+1)*sizeof(char));
-		//cin >> out;
 
 		string result = "yes";
 		Stack train_w;
@@ -153,7 +128,7 @@ int main()
 				}
 				//原队列没找到，到栈里找
 				else {
-					if (train_w.wait[train_w.size - 1].name == out[i])
+					if (train_w.size && train_w.wait[train_w.size - 1].name == out[i])
 						Pop_Stack(train_w);
 					else
 						result = "no";
