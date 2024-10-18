@@ -1,10 +1,9 @@
 #include <iostream>
 #include <stack>
 #include <string>
-#include<vector>
 using namespace std;
 
-/*pair<int, int> longestValidParentheses(const string& s) {
+pair<int, int> longestValidParentheses(const string& s) {
     stack<int> stk;
     int maxLength = 0;
     int start = -1;  // Start position of the longest valid parentheses substring
@@ -31,7 +30,7 @@ using namespace std;
     }
 
     return { maxLength, start };  // Return the length and start position
-}*/
+}
 
 int main() {
     string s;
