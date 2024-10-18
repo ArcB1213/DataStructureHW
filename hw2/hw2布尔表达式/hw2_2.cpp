@@ -37,7 +37,7 @@ int Pop_Stack(MyStack& S)
 	return 0;
 }
 
-int Precede(char opr1, char opr2)//娉ㄦ剰鍗曠洰杩愮畻绗︼紒鐨勪紭鍏堢骇
+int Precede(char opr1, char opr2)//注意单目运算符！的优先级
 {
 	switch (opr1) {
 		case '(':
@@ -161,16 +161,6 @@ int main()
 			}
 			else
 				j++;
-			/*cout << "运算" << j + 1 << endl;
-			cout << "bnum: ";
-			for (int c = 0; c < bnum.size; c++)
-				cout << bnum.elem[c];
-			cout << endl;
-			cout << "sign: ";
-			for (int c = 0; c < sign.size; c++)
-				cout << sign.elem[c];
-			cout << endl;
-			cout << endl;*/
 		}
 		//读取后运算
 		while (sign.size) {
