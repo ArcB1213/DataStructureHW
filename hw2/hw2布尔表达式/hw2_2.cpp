@@ -37,7 +37,7 @@ int Pop_Stack(MyStack& S)
 	return 0;
 }
 
-int Precede(char opr1, char opr2)
+int Precede(char opr1, char opr2)//注意单目运算符！的优先级
 {
 	switch (opr1) {
 		case '(':
