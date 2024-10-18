@@ -35,41 +35,8 @@ using namespace std;
 
 int main() {
     string s;
-    cin >> s;
-    /*int maxans = 0;
-    int start = 0;
-    stack<int> stk;
-    stk.push(-1);
-    for (int i = 0; i < s.length(); i++) {
-        if (s[i] == '(') {
-            stk.push(i);
-        }
-        else {
-            stk.pop();
-            if (stk.empty()) {
-                stk.push(i);
-            }
-            else {
-                int ansR = maxans;
-                maxans = max(maxans, i - stk.top());
-                if (maxans > ansR)
-                    start = stk.top() + 1;
-            }
-        }
-    }*/
-    int maxans = 0, n = s.length();
-    vector<int> dp(n, 0);
-    for (int i = 1; i < n; i++) {
-        if (s[i] == ')') {
-            if (s[i - 1] == '(') {
-                dp[i] = (i >= 2 ? dp[i - 2] : 0) + 2;
-            }
-            else if (i - dp[i - 1] > 0 && s[i - dp[i - 1] - 1] == '(') {
-                dp[i] = dp[i - 1] + ((i - dp[i - 1]) >= 2 ? dp[i - dp[i - 1] - 2] : 0) + 2;
-            }
-            maxans = max(maxans, dp[i]);
-        }
-    }
-    cout << maxans << " " << endl;
+    cin >> s;  // Input the string
+    auto result = longestValidParentheses(s);
+    cout << result.first << " " << result.second << endl;  // Output the result
     return 0;
 }
