@@ -70,10 +70,8 @@ int Pop_Stack(Stack& S)
 	}
 	else {
 		free(S.wait);
-		S.wait = NULL;
+		S.wait = NULL;//出栈至栈空后应令指针指向NULL，否则再次入栈时无法realloc
 	}
-		
-
 	return 0;
 }
 

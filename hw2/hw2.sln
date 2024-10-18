@@ -5,6 +5,8 @@ VisualStudioVersion = 17.11.35327.3
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "hw2列车进站", "hw2列车进站\hw2列车进站.vcxproj", "{E0B38947-8D6D-420A-B2ED-8582A70BC710}"
 EndProject
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "hw2布尔表达式", "hw2布尔表达式\hw2布尔表达式.vcxproj", "{CD15788E-BA99-4015-9BC6-D4B68632F4E5}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|x64 = Debug|x64
@@ -21,6 +23,14 @@ Global
 		{E0B38947-8D6D-420A-B2ED-8582A70BC710}.Release|x64.Build.0 = Release|x64
 		{E0B38947-8D6D-420A-B2ED-8582A70BC710}.Release|x86.ActiveCfg = Release|Win32
 		{E0B38947-8D6D-420A-B2ED-8582A70BC710}.Release|x86.Build.0 = Release|Win32
+		{CD15788E-BA99-4015-9BC6-D4B68632F4E5}.Debug|x64.ActiveCfg = Debug|x64
+		{CD15788E-BA99-4015-9BC6-D4B68632F4E5}.Debug|x64.Build.0 = Debug|x64
+		{CD15788E-BA99-4015-9BC6-D4B68632F4E5}.Debug|x86.ActiveCfg = Debug|Win32
+		{CD15788E-BA99-4015-9BC6-D4B68632F4E5}.Debug|x86.Build.0 = Debug|Win32
+		{CD15788E-BA99-4015-9BC6-D4B68632F4E5}.Release|x64.ActiveCfg = Release|x64
+		{CD15788E-BA99-4015-9BC6-D4B68632F4E5}.Release|x64.Build.0 = Release|x64
+		{CD15788E-BA99-4015-9BC6-D4B68632F4E5}.Release|x86.ActiveCfg = Release|Win32
+		{CD15788E-BA99-4015-9BC6-D4B68632F4E5}.Release|x86.Build.0 = Release|Win32
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
