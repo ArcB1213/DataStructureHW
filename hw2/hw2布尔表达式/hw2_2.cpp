@@ -71,9 +71,8 @@ int Precede(char opr1, char opr2)
 			case '|':
 			case ')':
 			case '&':
-			case '!':
 				return 1;
-
+			case '!':
 			case '(':
 				return -1;
 			}
@@ -162,12 +161,23 @@ int main()
 			}
 			else
 				j++;
+			/*cout << "运算" << j + 1 << endl;
+			cout << "bnum: ";
+			for (int c = 0; c < bnum.size; c++)
+				cout << bnum.elem[c];
+			cout << endl;
+			cout << "sign: ";
+			for (int c = 0; c < sign.size; c++)
+				cout << sign.elem[c];
+			cout << endl;
+			cout << endl;*/
 		}
 		//读取后运算
 		while (sign.size) {
 			char result = Operate(bnum, sign.elem[sign.size - 1]);
 			Pop_Stack(bnum);
-			Pop_Stack(bnum);
+			if (sign.elem[sign.size - 1] != '!')
+				Pop_Stack(bnum);
 			Pop_Stack(sign);
 			Push_Stack(bnum, result);
 		}
