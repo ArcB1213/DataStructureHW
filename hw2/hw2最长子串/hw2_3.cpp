@@ -49,7 +49,7 @@ int main()
     MyStack brackets;
     brackets.elem = NULL;
     brackets.size = 0;
-    int Start = 0, Length = 0;
+    int Start = 0, Length = 0, start_t = 0;
     for (int i = 0; i < Input.length(); i++) {
         if (Input[i] == '(') {
             sign temp;
@@ -60,13 +60,24 @@ int main()
         else {
             //ÓÒÀ¨ºÅºÏ·¨
             if (brackets.size && brackets.elem[brackets.size - 1].opr == '(') {
-                int start_t = brackets.elem[brackets.size - 1].start;
-                int length_t = i - start_t + 1;
-                int length_r = Length;
-                Length = (Length > length_t ? Length : length_t);
-                if (Length > length_r)
-                    Start = start_t;
                 Pop_Stack(brackets);
+                if (brackets.size)
+                    start_t = brackets.elem[brackets.size - 1].start;
+                else
+                    start_t = -1;
+                int length_t = i - start_t;
+                if (length_t > Length) {
+					Length = length_t;
+                    Start = start_t + 1;
+                }               
+            }
+            else {
+                if (brackets.size)
+					Pop_Stack(brackets);
+                sign temp;
+                temp.opr = ')';
+                temp.start = i;
+                Push_Stack(brackets, temp);
             }
         }
     }
