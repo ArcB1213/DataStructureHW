@@ -53,21 +53,42 @@ int DeQueue(MyQueue& Q)
 	return elem;
 }
 
-/*int MaxQueue(MyQueue Q)
+int MaxQueue(MyQueue Q,Node **pmax)
 {
 	if (Q.size == 0)
 		return -1;
 	Node* p = Q.front;
 	int max = p->elem;
+	*pmax = p;
 	while (p != NULL) {
-		if (p->elem > max)
+		if (p->elem > max) {
 			max = p->elem;
+			*pmax = p;
+		}			
 		p = p->next;
 	}
 	return max;
 }
 
-int Push_Stack(MyStack& S, int elem)
+void DeQueue_End(MyQueue& Q)
+{
+	Q.size--;
+	if (!Q.size) {
+		delete Q.front;
+		Q.front = NULL;
+		Q.rear = NULL;
+	}
+	else {
+		Node* p = Q.front;
+		while (p->next != Q.rear)
+			p = p->next;
+		p->next = NULL;
+		delete Q.rear;
+		Q.rear = p;
+	}
+}
+
+/*int Push_Stack(MyStack& S, int elem)
 {
 	S.size++;
 	int* sp = (int*)realloc(S.value, (S.size) * sizeof(int));
@@ -104,20 +125,18 @@ int main()
 	Q.rear = NULL;
 	Q.size = 0;
 
-	//MyStack Max;
-	//Max.value = NULL;
-	//Max.size = 0;
-	maxnode Max;
-	Max.p = NULL;
-	Max.value = 0;
+	MyQueue Max;
+	Max.front = NULL;
+	Max.rear = NULL;
+	Max.size = 0;
 
 	int max_size;
 	cin >> max_size;
 	while (1) {
 		string command;
 		cin >> command;
-		//防止出队元素是最大元素时，Max栈空
-
+		
+		
 		if (command == "enqueue") {
 			if (Q.size == max_size)
 				cout << "Queue is Full" << endl;
@@ -125,39 +144,25 @@ int main()
 				int elem;
 				cin >> elem;
 				EnQueue(Q, elem);
-				if (Max.size) {
-					if (elem >= Max.value[Max.size-1]) {
-						int temp;
-						temp = elem;						
-						Push_Stack(Max, temp);
-					}
-				}
-				else {
-					int temp;
-					temp = elem;
-					Push_Stack(Max, temp);
-				}
-				
+				while (Max.size && Max.rear->elem < elem)
+					DeQueue_End(Max);
+				EnQueue(Max, elem);
 			}
 		}
 		else if (command == "dequeue") {
 			if (Q.size == 0)
 				cout << "Queue is Empty" << endl;
 			else {
-				if (Q.front->elem == Max.value[Max.size-1])
-					Pop_Stack(Max);
+				if (Q.front->elem == Max.front->elem)
+					DeQueue(Max);
 				cout << DeQueue(Q) << endl;
-				if (Q.size) {
-					int temp = MaxQueue(Q);
-					Push_Stack(Max, temp);
-				}
 			}				
 		}
 		else if (command == "max") {
 			if (Q.size == 0)
 				cout << "Queue is Empty" << endl;
 			else {
-				cout << Max.value[Max.size - 1] << endl;					
+				cout << Max.front->elem << endl;					
 			}
 				
 		}
@@ -167,7 +172,5 @@ int main()
 			break;
 		}
 	}
-	if (Max.size)
-		free(Max.value);
 	return 0;
 }
