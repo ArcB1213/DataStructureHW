@@ -13,6 +13,8 @@ Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "test3_1", "test3_1\test3_1.
 EndProject
 Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "hw2最长子串", "hw2最长子串\hw2最长子串.vcxproj", "{BFD654D7-FAEE-439E-88A5-9F971A353519}"
 EndProject
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "hw2_队列的应用", "hw2_队列的应用\hw2_队列的应用.vcxproj", "{2763F691-E733-4BC6-AFFE-3A29AE4BF8B7}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|x64 = Debug|x64
@@ -61,6 +63,14 @@ Global
 		{BFD654D7-FAEE-439E-88A5-9F971A353519}.Release|x64.Build.0 = Release|x64
 		{BFD654D7-FAEE-439E-88A5-9F971A353519}.Release|x86.ActiveCfg = Release|Win32
 		{BFD654D7-FAEE-439E-88A5-9F971A353519}.Release|x86.Build.0 = Release|Win32
+		{2763F691-E733-4BC6-AFFE-3A29AE4BF8B7}.Debug|x64.ActiveCfg = Debug|x64
+		{2763F691-E733-4BC6-AFFE-3A29AE4BF8B7}.Debug|x64.Build.0 = Debug|x64
+		{2763F691-E733-4BC6-AFFE-3A29AE4BF8B7}.Debug|x86.ActiveCfg = Debug|Win32
+		{2763F691-E733-4BC6-AFFE-3A29AE4BF8B7}.Debug|x86.Build.0 = Debug|Win32
+		{2763F691-E733-4BC6-AFFE-3A29AE4BF8B7}.Release|x64.ActiveCfg = Release|x64
+		{2763F691-E733-4BC6-AFFE-3A29AE4BF8B7}.Release|x64.Build.0 = Release|x64
+		{2763F691-E733-4BC6-AFFE-3A29AE4BF8B7}.Release|x86.ActiveCfg = Release|Win32
+		{2763F691-E733-4BC6-AFFE-3A29AE4BF8B7}.Release|x86.Build.0 = Release|Win32
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
