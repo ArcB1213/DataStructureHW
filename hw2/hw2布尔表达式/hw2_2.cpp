@@ -2,11 +2,18 @@
 #include<string>
 using namespace std;
 
+/**
+ * @struct MyStack
+ * @brief 结构体表示栈
+ * @param elem 栈元素数组
+ * @param size 栈的大小
+ */
 struct MyStack {
 	char* elem;
 	int size;
 };
 
+//压入栈顶元素
 int Push_Stack(MyStack& S, char elem)
 {
 	S.size++;
@@ -20,6 +27,7 @@ int Push_Stack(MyStack& S, char elem)
 	return 0;
 }
 
+//弹出栈顶元素
 int Pop_Stack(MyStack& S)
 {
 	S.size--;
@@ -37,7 +45,8 @@ int Pop_Stack(MyStack& S)
 	return 0;
 }
 
-int Precede(char opr1, char opr2)//娉ㄦ剰鍗曠洰杩愮畻绗︼紒鐨勪紭鍏堢骇
+//返回优先级，-1表示栈顶元素优先级低，0表示栈顶元素为左括号，1表示栈顶元素优先级高
+int Precede(char opr1, char opr2)//尤其注意单目运算符的优先级、括号的优先级
 {
 	switch (opr1) {
 		case '(':
@@ -82,6 +91,7 @@ int Precede(char opr1, char opr2)//娉ㄦ剰鍗曠洰杩愮畻绗︼紒鐨勪紭鍏堢骇
 	return -2;
 }
 
+//根据运算符计算结果
 char Operate(MyStack num, char opr)
 {
 	
@@ -123,31 +133,37 @@ int main()
 		istr++;
 	}
 	for (int i = 0; i < istr; i++) {
-		MyStack bnum, sign;
+		MyStack bnum, sign;//bnum存放操作数，sign存放运算符
 		bnum.size = 0;
 		bnum.elem = NULL;
 		sign.size = 0;
 		sign.elem = NULL;
 		for (int j = 0; j < Input[i].length();) {
+			//读到操作数，直接入栈
 			if (Input[i][j] == 'V' || Input[i][j] == 'F') {
 				Push_Stack(bnum, Input[i][j]);
 				j++;
-			}				
+			}
+			//读到运算符，进行优先级比较
 			else if (Input[i][j] != ' ') {
 				if (sign.size) {
 					int priority = Precede(sign.elem[sign.size - 1], Input[i][j]);
 					switch (priority) {
+					//栈顶元素优先级低，运算符入栈
 					case -1:
 						Push_Stack(sign, Input[i][j]);
 						j++;
 						break;
+					//左右括号匹配，括号出栈
 					case 0:
 						Pop_Stack(sign);
 						j++;
 						break;
+					//栈顶元素优先级高，进行运算
 					case 1:
 						char result = Operate(bnum, sign.elem[sign.size - 1]);						
 						Pop_Stack(bnum);
+						//单目运算符只有一个操作数，不需要弹出第二个操作数
 						if (sign.elem[sign.size - 1] != '!')
 							Pop_Stack(bnum);
 						Pop_Stack(sign);
@@ -161,16 +177,6 @@ int main()
 			}
 			else
 				j++;
-			/*cout << "运算" << j + 1 << endl;
-			cout << "bnum: ";
-			for (int c = 0; c < bnum.size; c++)
-				cout << bnum.elem[c];
-			cout << endl;
-			cout << "sign: ";
-			for (int c = 0; c < sign.size; c++)
-				cout << sign.elem[c];
-			cout << endl;
-			cout << endl;*/
 		}
 		//读取后运算
 		while (sign.size) {

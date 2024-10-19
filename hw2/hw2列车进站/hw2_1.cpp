@@ -2,22 +2,26 @@
 #include<string>
 using namespace std;
 
+//元素结构体，表示一辆火车
 struct train {
-	char name;
-	int status;
+	char name; /**< 火车的名称 */
+	int status; /**< 火车的状态 */
 };
 
+//顺序表，表示火车序列
 struct Trains {
-	train* t;
-	int length;
-	int size;
+	train* t; /**< 火车数组的指针 */
+	int length; /**< 火车数组的长度 */
+	int size; /**< 火车数组的大小 */
 };
 
+// 栈结构体
 struct Stack {
-	train* wait;
-	int size;
+	train* wait; /**< 栈中火车的指针 */
+	int size; /**< 栈的大小 */
 };
 
+// 在数组中查找元素
 int FindElem(char src, train L[], int length)
 {
 	
@@ -29,6 +33,7 @@ int FindElem(char src, train L[], int length)
 	return -1;
 }
 
+// 删除顺序表的第一个元素
 int delete_head(Trains &T)
 {
 	for (int i = 0; i < T.length - 1; i++)
@@ -46,6 +51,7 @@ int delete_head(Trains &T)
 	return 0;
 }
 
+// 入栈
 int Push_Stack(Stack& S,train elem)
 {
 	S.size++;
@@ -59,6 +65,7 @@ int Push_Stack(Stack& S,train elem)
 	return 0;
 }
 
+// 出栈
 int Pop_Stack(Stack& S)
 {
 	S.size--;
@@ -107,7 +114,7 @@ int main()
 		copy_trains(Init, Temp);
 
 		string result = "yes";
-		Stack train_w;
+		Stack train_w;//栈方式模拟车站
 		train_w.wait = NULL;
 		train_w.size = 0;
 		for (int i = 0; i < Init.length; i++) {
@@ -115,19 +122,22 @@ int main()
 				delete_head(Temp);
 			}
 			else {
-				//在原队列里寻找该车辆
+				//在入口等待序列里寻找该车辆
 				int f1 = FindElem(out[i], Temp.t, Temp.length);
 				if (f1 >= 0) {
+					//找到该车，把前面的车辆置入车站内
 					while (Temp.t[0].name != out[i]) {
 						Push_Stack(train_w, Temp.t[0]);
 						delete_head(Temp);
 					}
 					delete_head(Temp);
 				}
-				//原队列没找到，到栈里找
+				//原队列没找到，到车站（栈）里找
 				else {
+					//栈顶是该车，该车出栈，从出口离开，满足条件
 					if (train_w.size && train_w.wait[train_w.size - 1].name == out[i])
 						Pop_Stack(train_w);
+					//栈顶不是该车，输出序列无法达成
 					else
 						result = "no";
 				}
@@ -138,7 +148,6 @@ int main()
 			free(train_w.wait);
 		if (Temp.size)
 			free(Temp.t);
-		//free(out);
 	}
 	
 	return 0;

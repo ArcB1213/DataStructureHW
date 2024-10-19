@@ -7,8 +7,6 @@ Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "hw2列车进站", "hw2列�
 EndProject
 Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "hw2布尔表达式", "hw2布尔表达式\hw2布尔表达式.vcxproj", "{CD15788E-BA99-4015-9BC6-D4B68632F4E5}"
 EndProject
-Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "test2", "test2\test2.vcxproj", "{5FBDD665-8F26-4058-99FD-DF9BD420C877}"
-EndProject
 Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "test3_1", "test3_1\test3_1.vcxproj", "{22F54174-98B6-4332-AD94-F531DAC92FD1}"
 EndProject
 Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "hw2最长子串", "hw2最长子串\hw2最长子串.vcxproj", "{BFD654D7-FAEE-439E-88A5-9F971A353519}"
@@ -41,14 +39,6 @@ Global
 		{CD15788E-BA99-4015-9BC6-D4B68632F4E5}.Release|x64.Build.0 = Release|x64
 		{CD15788E-BA99-4015-9BC6-D4B68632F4E5}.Release|x86.ActiveCfg = Release|Win32
 		{CD15788E-BA99-4015-9BC6-D4B68632F4E5}.Release|x86.Build.0 = Release|Win32
-		{5FBDD665-8F26-4058-99FD-DF9BD420C877}.Debug|x64.ActiveCfg = Debug|x64
-		{5FBDD665-8F26-4058-99FD-DF9BD420C877}.Debug|x64.Build.0 = Debug|x64
-		{5FBDD665-8F26-4058-99FD-DF9BD420C877}.Debug|x86.ActiveCfg = Debug|Win32
-		{5FBDD665-8F26-4058-99FD-DF9BD420C877}.Debug|x86.Build.0 = Debug|Win32
-		{5FBDD665-8F26-4058-99FD-DF9BD420C877}.Release|x64.ActiveCfg = Release|x64
-		{5FBDD665-8F26-4058-99FD-DF9BD420C877}.Release|x64.Build.0 = Release|x64
-		{5FBDD665-8F26-4058-99FD-DF9BD420C877}.Release|x86.ActiveCfg = Release|Win32
-		{5FBDD665-8F26-4058-99FD-DF9BD420C877}.Release|x86.Build.0 = Release|Win32
 		{22F54174-98B6-4332-AD94-F531DAC92FD1}.Debug|x64.ActiveCfg = Debug|x64
 		{22F54174-98B6-4332-AD94-F531DAC92FD1}.Debug|x64.Build.0 = Debug|x64
 		{22F54174-98B6-4332-AD94-F531DAC92FD1}.Debug|x86.ActiveCfg = Debug|Win32
