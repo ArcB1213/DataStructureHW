@@ -5,6 +5,8 @@ VisualStudioVersion = 17.11.35327.3
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "二叉树的非递归遍历", "二叉树的非递归遍历\二叉树的非递归遍历.vcxproj", "{A9D24F98-1C76-46EC-9FE2-73ABB2148D1E}"
 EndProject
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "二叉树的同构", "二叉树的同构\二叉树的同构.vcxproj", "{DD71AA33-852D-4AFF-A69D-2D48CCD1348B}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|x64 = Debug|x64
@@ -21,6 +23,14 @@ Global
 		{A9D24F98-1C76-46EC-9FE2-73ABB2148D1E}.Release|x64.Build.0 = Release|x64
 		{A9D24F98-1C76-46EC-9FE2-73ABB2148D1E}.Release|x86.ActiveCfg = Release|Win32
 		{A9D24F98-1C76-46EC-9FE2-73ABB2148D1E}.Release|x86.Build.0 = Release|Win32
+		{DD71AA33-852D-4AFF-A69D-2D48CCD1348B}.Debug|x64.ActiveCfg = Debug|x64
+		{DD71AA33-852D-4AFF-A69D-2D48CCD1348B}.Debug|x64.Build.0 = Debug|x64
+		{DD71AA33-852D-4AFF-A69D-2D48CCD1348B}.Debug|x86.ActiveCfg = Debug|Win32
+		{DD71AA33-852D-4AFF-A69D-2D48CCD1348B}.Debug|x86.Build.0 = Debug|Win32
+		{DD71AA33-852D-4AFF-A69D-2D48CCD1348B}.Release|x64.ActiveCfg = Release|x64
+		{DD71AA33-852D-4AFF-A69D-2D48CCD1348B}.Release|x64.Build.0 = Release|x64
+		{DD71AA33-852D-4AFF-A69D-2D48CCD1348B}.Release|x86.ActiveCfg = Release|Win32
+		{DD71AA33-852D-4AFF-A69D-2D48CCD1348B}.Release|x86.Build.0 = Release|Win32
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
