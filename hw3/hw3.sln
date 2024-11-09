@@ -13,6 +13,8 @@ Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "树的重构", "树的重�
 EndProject
 Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "最近公共祖先", "最近公共祖先\最近公共祖先.vcxproj", "{5A98F89A-4901-4EBE-AD35-EA4D69AD29C2}"
 EndProject
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "求树的后序", "求树的后序\求树的后序.vcxproj", "{6B2A2151-514A-463D-BDBE-97EA470A35B8}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|x64 = Debug|x64
@@ -61,6 +63,14 @@ Global
 		{5A98F89A-4901-4EBE-AD35-EA4D69AD29C2}.Release|x64.Build.0 = Release|x64
 		{5A98F89A-4901-4EBE-AD35-EA4D69AD29C2}.Release|x86.ActiveCfg = Release|Win32
 		{5A98F89A-4901-4EBE-AD35-EA4D69AD29C2}.Release|x86.Build.0 = Release|Win32
+		{6B2A2151-514A-463D-BDBE-97EA470A35B8}.Debug|x64.ActiveCfg = Debug|x64
+		{6B2A2151-514A-463D-BDBE-97EA470A35B8}.Debug|x64.Build.0 = Debug|x64
+		{6B2A2151-514A-463D-BDBE-97EA470A35B8}.Debug|x86.ActiveCfg = Debug|Win32
+		{6B2A2151-514A-463D-BDBE-97EA470A35B8}.Debug|x86.Build.0 = Debug|Win32
+		{6B2A2151-514A-463D-BDBE-97EA470A35B8}.Release|x64.ActiveCfg = Release|x64
+		{6B2A2151-514A-463D-BDBE-97EA470A35B8}.Release|x64.Build.0 = Release|x64
+		{6B2A2151-514A-463D-BDBE-97EA470A35B8}.Release|x86.ActiveCfg = Release|Win32
+		{6B2A2151-514A-463D-BDBE-97EA470A35B8}.Release|x86.Build.0 = Release|Win32
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
