@@ -36,11 +36,6 @@ int AppendElem(MyList& L, TNode *childNode)
 	return 0;
 }
 
-/*struct BTNode {
-	TNode* l_child;
-	TNode* nextsibling;
-};*/
-
 void transform(TNode *Tree)
 {
 	if (Tree->children_list.length) {
