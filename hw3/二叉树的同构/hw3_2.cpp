@@ -4,38 +4,23 @@ using namespace std;
 
 int depthmax;
 
+// 定义二叉树节点结构体
 struct BiTNode {
-	char data;
-	int r_child;
-	int l_child;
+	char data;       // 节点存储的数据
+	int r_child;     // 右孩子的索引
+	int l_child;     // 左孩子的索引
 };
 
+// 定义树的列表结构体
 struct TreeList {
-	BiTNode* Tree;
-	int size;
+	BiTNode* Tree;   // 指向存储二叉树节点的数组
+	int size;        // 树的节点数量
 };
 
-bool isomorphic(BiTNode* Tree1, BiTNode* Tree2, int root1, int root2) {
-	if (root1 == -1 && root2 == -1) 
-		return true;
-	if ((root1 == -1 && root2 != -1) || (root1 != -1 && root2 == -1)) 
-		return false;
-	if (Tree1[root1].data != Tree2[root2].data) 
-		return false;
-
-	int L1 = Tree1[root1].l_child, R1 = Tree1[root1].r_child;
-	int L2 = Tree2[root2].l_child, R2 = Tree2[root2].r_child;
-	if ((isomorphic(Tree1, Tree2, L1,L2) && isomorphic(Tree1, Tree2, R1, R2)) ||
-		(isomorphic(Tree1, Tree2, L1, R2) && isomorphic(Tree1, Tree2, R1, L2))) {
-		return true;
-	}
-
-	return false;
-}
-
+// 定义栈结构体
 struct MyStack {
-	int* elem;
-	int size;
+	int* elem;       // 栈元素数组
+	int size;        // 当前栈大小
 };
 
 //压入栈顶元素
@@ -71,21 +56,44 @@ int Pop_Stack(MyStack& S, int &elem)
 	return 0;
 }
 
-void DepthOfBiTree(BiTNode* Tree, MyStack &Depth,int i)
-{
-	int temp_d = Depth.elem[Depth.size - 1]+1;
-	Push_Stack(Depth, temp_d);
-	int Lc = Tree[i].l_child, Rc = Tree[i].r_child;
-	if (Lc>=0)
-		DepthOfBiTree(Tree, Depth, Lc);
-	if(Rc>=0)
-		DepthOfBiTree(Tree, Depth, Rc);
-	int max_temp;
-	Pop_Stack(Depth, max_temp);
-	if (max_temp > depthmax)
-		depthmax = max_temp;
+// 判断两棵树是否同构
+bool isomorphic(BiTNode* Tree1, BiTNode* Tree2, int root1, int root2) {
+	// 如果两个节点都是空
+	if (root1 == -1 && root2 == -1)
+		return true;
+	// 如果只有一个节点是空
+	if ((root1 == -1 && root2 != -1) || (root1 != -1 && root2 == -1))
+		return false;
+	// 如果当前节点的数据不相等
+	if (Tree1[root1].data != Tree2[root2].data)
+		return false;
+
+	// 递归判断左右子树是否同构
+	int L1 = Tree1[root1].l_child, R1 = Tree1[root1].r_child;
+	int L2 = Tree2[root2].l_child, R2 = Tree2[root2].r_child;
+	// 返回两个情况的结果：正常匹配或交叉匹配
+	return (isomorphic(Tree1, Tree2, L1, L2) && isomorphic(Tree1, Tree2, R1, R2)) ||
+		(isomorphic(Tree1, Tree2, L1, R2) && isomorphic(Tree1, Tree2, R1, L2));
 }
 
+// 计算二叉树深度的函数
+void DepthOfBiTree(BiTNode* Tree, MyStack& Depth, int i) {
+	int temp_d = Depth.elem[Depth.size - 1] + 1; // 当前深度加1
+	Push_Stack(Depth, temp_d); // 将新深度推入栈中
+
+	int Lc = Tree[i].l_child, Rc = Tree[i].r_child; // 左右孩子索引
+	if (Lc >= 0) // 递归遍历左子树
+		DepthOfBiTree(Tree, Depth, Lc);
+	if (Rc >= 0) // 递归遍历右子树
+		DepthOfBiTree(Tree, Depth, Rc);
+
+	int max_temp;
+	Pop_Stack(Depth, max_temp); // 弹出当前节点深度并更新最大深度
+	if (max_temp > depthmax)
+		depthmax = max_temp; // 更新全局最大深度
+}
+
+//计算二叉树深度的另一种方法
 int calculateDepth(BiTNode* Tree, int root) {
 	if (root < 0) return 0;
 	int leftDepth = calculateDepth(Tree, Tree[root].l_child);
@@ -165,7 +173,6 @@ int main()
 		if (N1 == N2) {
 			int i1 = root1, i2 = root2;
 			if (T1.Tree[root1].data == T2.Tree[root2].data)
-				//correct = PreOrderTraverse(T1.Tree, T2.Tree, root1, root2);
 				correct = isomorphic(T1.Tree, T2.Tree, root1, root2);
 		}
 	}	
@@ -188,7 +195,6 @@ int main()
 	if(N1)
 		DepthOfBiTree(T1.Tree, Depth1, root1);
 	cout << depthmax << endl;
-	//cout << Depth1.size << ' ' << Depth1.elem[0] << endl;
 
 	if (correct == 0) {
 		depthmax = 0;
@@ -197,12 +203,6 @@ int main()
 	}
 	
 	cout << depthmax << endl;
-	//cout << Depth2.size << ' ' << Depth2.elem[0] << endl;
-
-	/*int depth1 = calculateDepth(T1.Tree, root1);
-	int depth2 = calculateDepth(T2.Tree, root2);
-	cout << depth1 << endl;
-	cout << depth2 << endl;*/
 
 	if (N1) {
 		free(r1);
@@ -213,12 +213,6 @@ int main()
 		free(r2);
 		free(T2.Tree);
 	}
-		
-
-	/*if (Depth1.size)
-		free(Depth1.elem);
-	if (Depth2.size)
-		free(Depth2.elem);*/
 
 	return 0;
 }

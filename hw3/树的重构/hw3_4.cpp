@@ -7,19 +7,23 @@ using namespace std;
 
 struct TNode;
 
+// 定义孩子列表的结构
 struct MyList {
-	TNode** children;
-	int size = ListInitSize;
-	int length = 0;
+	TNode** children;       // 指向孩子节点的指针数组
+	int size = ListInitSize; // 列表的总大小
+	int length = 0;         // 当前孩子个数
 };
 
+// 定义树节点结构
 struct TNode {
-	TNode* parent;
-	MyList children_list;
-	TNode* l_child;
-	TNode* nextsibling;
+	TNode* parent;          // 父节点的指针
+	MyList children_list;   // 孩子节点列表
+	//下面两个元素用于将树转换为二叉树
+	TNode* l_child;         // 二叉树下节点的左孩子
+	TNode* nextsibling;     // 兄弟节点（二叉树下理解为节点的右孩子）的指针
 };
 
+// 向列表中追加孩子节点
 int AppendElem(MyList& L, TNode *childNode)
 {
 	if (L.length >= L.size) {
@@ -36,28 +40,31 @@ int AppendElem(MyList& L, TNode *childNode)
 	return 0;
 }
 
-void transform(TNode *Tree)
-{
+// 转换原树为二叉树
+void transform(TNode* Tree) {
 	if (Tree->children_list.length) {
-		Tree->l_child = Tree->children_list.children[0];
+		Tree->l_child = Tree->children_list.children[0]; // 将第一个儿童设置为左孩子
 		for (int i = 0; i < Tree->children_list.length; i++) {
-			if(i+1< Tree->children_list.length)
+			// 连接兄弟节点
+			if (i + 1 < Tree->children_list.length)
 				Tree->children_list.children[i]->nextsibling = Tree->children_list.children[i + 1];
-			transform(Tree->children_list.children[i]);
-		}			
-	}	
-}
-
-int calculateTreeDepth(TNode *Tree) 
-{
-	int d = 0;
-	for (int i = 0; i < Tree->children_list.length; i++) {
-		int d_temp = calculateTreeDepth(Tree->children_list.children[i]);
-		d = d_temp > d ? d_temp : d;
+			transform(Tree->children_list.children[i]); // 递归转换子树
+		}
 	}
-	return d + 1;
 }
 
+// 计算树的深度
+int calculateTreeDepth(TNode* Tree) {
+	int d = 0; // 初始化深度
+	for (int i = 0; i < Tree->children_list.length; i++) {
+		// 计算每个儿童的深度
+		int d_temp = calculateTreeDepth(Tree->children_list.children[i]);
+		d = d_temp > d ? d_temp : d; // 更新最大深度
+	}
+	return d + 1; // 返回当前节点的深度
+}
+
+// 计算二叉树的深度
 int calculateBTreeDepth(TNode* Tree)
 {
 	int d = 0;
@@ -102,21 +109,24 @@ int main()
 		root->l_child = NULL;
 		root->nextsibling = NULL;
 		TNode *curNode = root;
+
+		// 解析输入字符串并构建原树
 		for (int i = 0; i < int(str.length()); i++) {
-			if (str[i] == 'd') {
-				TNode* cNode = (TNode*)malloc(sizeof(TNode));
-				cNode->parent = curNode;
+			if (str[i] == 'd') { // 'd'表示添加一个孩子节点
+				TNode* cNode = (TNode*)malloc(sizeof(TNode)); // 创建新孩子
+				cNode->parent = curNode; // 设置孩子的父节点
 				cNode->children_list.length = 0;
-				cNode->children_list.size = ListInitSize;
-				cNode->children_list.children = (TNode**)malloc(cNode->children_list.size * sizeof(TNode*));
-				cNode->l_child = NULL;
-				cNode->nextsibling = NULL;
-				AppendElem(curNode->children_list, cNode);
-				curNode = cNode;
+				cNode->children_list.size = ListInitSize; 
+				cNode->children_list.children = (TNode**)malloc(cNode->children_list.size * sizeof(TNode*)); // 分配孩子数组内存
+				cNode->l_child = NULL; 
+				cNode->nextsibling = NULL; 
+				AppendElem(curNode->children_list, cNode); // 将孩子节点追加到当前节点的孩子列表中
+				curNode = cNode; // 移动当前节点指针到新添加的孩子
 			}
-			else if (str[i] == 'u')
-				curNode = curNode->parent;
+			else if (str[i] == 'u') // 'u'表示返回到父节点
+				curNode = curNode->parent; // 将当前节点指针移到父节点
 		}
+
 		//原树转换为二叉树
 		transform(root);
 		int h1 = calculateTreeDepth(root) - 1,
