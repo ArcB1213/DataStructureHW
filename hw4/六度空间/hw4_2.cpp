@@ -1,39 +1,35 @@
 #include <iostream>
 #include <vector>
+#include <queue>
 #include <iomanip>
 using namespace std;
 
 #define myINFINITY 999
 
 struct Graph {
-	int** arcs;
+	vector<vector<int>> arcs;
 	int vexnum;
 };
 
-void ShortestPath_DIJ(Graph &G, int v0,int* D)
-{
-	int* final = new int[G.vexnum+1];
-	for (int i = 1; i <= G.vexnum; i++) {
-		final[i] = 0;
-		D[i] = G.arcs[v0][i];
-	}
+void BFS(Graph& G, int v0, int* D) {
+	bool* visited = new bool[G.vexnum + 1] {false};
+	queue<int> Q;
+	Q.push(v0);
+	visited[v0] = true;
 	D[v0] = 0;
-	final[v0] = 1;
-	for (int i = 1; i < G.vexnum; i++) {
-		int min = myINFINITY, v = 0;
-		for (int w = 1; w <= G.vexnum; w++) {
-			if(!final[w])
-				if (D[w] < min) {
-					v = w;
-					min = D[w];
-				}
-		}
-		final[v] = 1;
-		for (int w = 1; w <= G.vexnum; w++) {
-			if (!final[w] && (min + G.arcs[v][w] < D[w])) 
-				D[w] = min + G.arcs[v][w];
+	while (!Q.empty()) {
+		int v = Q.front();
+		Q.pop();
+		for (int i = 0; G.arcs[v][i]!=-1;i++) {
+			int w = G.arcs[v][i];
+			if (!visited[w]) {
+				D[w] = D[v] + 1;
+				visited[w] = true;
+				Q.push(w);
+			}
 		}
 	}
+	delete[] visited;
 }
 
 int main()
@@ -42,26 +38,24 @@ int main()
 	Graph G;
 	cin >> N >> M;
 	G.vexnum = N;
-	G.arcs = new int* [N+1];
-	for (int i = 0; i <= G.vexnum; i++) {
-		G.arcs[i] = new int[N+1];
-		for (int j = 0; j <= G.vexnum; j++)
-			G.arcs[i][j] = myINFINITY;
-	}
+	G.arcs.resize(N + 1);
 	for (int i = 0; i < M; i++) {
 		int v, w;
 		cin >> v >> w;
-		G.arcs[v][w] = 1;
-		G.arcs[w][v] = 1;
+		G.arcs[v].push_back(w);
+		G.arcs[w].push_back(v);
 	}
+
+	for (int i = 1; i <= G.vexnum; i++)
+		G.arcs[i].push_back(-1);
 
 	for (int i = 1; i <= G.vexnum; i++) {
 		int* D;
-		D = new int[N+1];
-		float count = 1;
-		ShortestPath_DIJ(G, i, D);
+		D = new int[N + 1] {myINFINITY};
+		float count = 0;
+		BFS(G, i, D);
 		for (int j = 1; j <= G.vexnum; j++) {
-			if (j != i && D[j] <= 6)
+			if (D[j] <= 6)
 				count++;
 		}
 		float account = (count / G.vexnum)*100;
