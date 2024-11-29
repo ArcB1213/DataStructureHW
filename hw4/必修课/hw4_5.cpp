@@ -1,99 +1,72 @@
 #include <iostream>
 #include <vector>
-#include <queue>
-
+#include <stack>
 using namespace std;
 
 // 图结构体
 struct Graph {
     vector<vector<int>> vertices;    // 正向邻接表
-    vector<vector<int>> reverse;    // 反向邻接表
     int vexnum;                      // 顶点数量
 
     // 初始化图
     Graph(int n) {
         vexnum = n;
         vertices.resize(n + 1);
-        reverse.resize(n + 1);
-    }
-
-    // 添加边（前置课程）
-    void addEdge(int from, int to) {
-        vertices[from].push_back(to);  // 正向边
-        reverse[to].push_back(from);  // 反向边
     }
 };
 
 
 
 // 计算最早完成时间
-vector<int> calculateEarliestTime(const Graph& graph, const vector<int>& coursetime) {
+vector<int> calculateEarliestTime(const Graph& graph, const vector<int>& coursetime,stack<int> &T) {
     vector<int> indegree(graph.vexnum + 1, 0);
     vector<int> earliest(graph.vexnum + 1, 0);
 
     // 计算入度
+    stack<int> S;
     for (int i = 1; i <= graph.vexnum; i++) {
         for (int j = 0; j < graph.vertices[i].size(); j++) {
             int next = graph.vertices[i][j];
             indegree[next]++;
         }
     }
+    for (int i = 1; i <= graph.vexnum; ++i)
+        if (indegree[i] == 0)
+            S.push(i);
 
-    queue<int> q;
-    // 初始化入度为0的课程
-    for (int i = 1; i <= graph.vexnum; ++i) {
-        if (indegree[i] == 0) {
-            q.push(i);
-            earliest[i] = coursetime[i];
-        }
-    }
-
-    // 拓扑排序
-    while (!q.empty()) {
-        int curr = q.front();
-        q.pop();
-
-        for (int next : graph.vertices[curr]) {
+    while (!(S.empty())) {
+        int curr = S.top();
+        S.pop();
+        T.push(curr);
+        for (int j = 0; j<int(graph.vertices[curr].size()); j++) {
+            int next = graph.vertices[curr][j];
             indegree[next]--;
-            earliest[next] = earliest[next] > (earliest[curr] + coursetime[next]) ? earliest[next] : (earliest[curr] + coursetime[next]);
             if (indegree[next] == 0)
-                q.push(next);
+                S.push(next);
+            if (earliest[curr] + coursetime[curr] > earliest[next])
+                earliest[next] = earliest[curr] + coursetime[curr];
         }
-    }
+   }
 
     return earliest;
 }
 
-// 计算最晚完成时间
-vector<int> calculateLatestTime(const Graph& graph, const vector<int>& coursetime, int minGraduationTime) {
+// 计算最晚开始时间
+vector<int> calculateLatestTime(const Graph& graph, const vector<int>& coursetime, int minGraduationTime, stack<int>& T) {
     vector<int> latest(graph.vexnum + 1, minGraduationTime);
-    vector<int> outdegree(graph.vexnum + 1, 0);
 
-    // 计算出度
-    for (int i = 1; i <= graph.vexnum; i++) {
-        for (int j = 0; j < graph.reverse[i].size(); j++) {
-            int prev = graph.reverse[i][j];
-            outdegree[prev]++;
+    while (!(T.empty())) {
+        int curr = T.top();
+        T.pop();
+        if (graph.vertices[curr].size()) {
+            for (int j = 0; j<int(graph.vertices[curr].size()); j++) {
+                int next = graph.vertices[curr][j];
+                if (latest[next] - coursetime[curr] < latest[curr])
+                    latest[curr] = latest[next] - coursetime[curr];
+            }
         }
-    }
-
-    queue<int> q;
-    // 初始化出度为0的课程
-    for (int i = 1; i <= graph.vexnum; ++i)
-        if (outdegree[i] == 0)
-            q.push(i);
-
-    // 反向拓扑排序
-    while (!q.empty()) {
-        int curr = q.front();
-        q.pop();
-
-        for (int prev : graph.reverse[curr]) {
-            latest[prev] = latest[prev] < (latest[curr] - coursetime[curr]) ? latest[prev] : (latest[curr] - coursetime[curr]);
-            outdegree[prev]--;
-            if (outdegree[prev] == 0)
-                q.push(prev);
-        }
+        else
+            latest[curr] = (minGraduationTime - coursetime[curr]) < latest[curr] ? (minGraduationTime - coursetime[curr]) : latest[curr];
     }
 
     return latest;
@@ -114,29 +87,30 @@ int main() {
         for (int j = 0; j < ci; ++j) {
             int prereq;
             cin >> prereq;
-            graph.addEdge(prereq, i);//添加前置课程
+            graph.vertices[prereq].push_back(i);
         }
     }
 
+    // 计算最早开始时间
+    stack<int> T;
+    vector<int> earliest = calculateEarliestTime(graph, coursetime,T);
     // 计算最早完成时间
-    vector<int> earliest = calculateEarliestTime(graph, coursetime);
+    vector<int> eFinish(n + 1);
+    for (int i = 1; i <= n; i++)
+        eFinish[i] = earliest[i] + coursetime[i];
 
-    // 计算总毕业时间（关键路径长度）
     int minGraduationTime = 0;
-    for (int i = 1; i <= n; ++i) {
-        if (earliest[i] > minGraduationTime) {
-            minGraduationTime = earliest[i];
-        }
-    }
+    for (int i = 1; i <= n; i++)
+        minGraduationTime = eFinish[i] > minGraduationTime ? eFinish[i] : minGraduationTime;
 
-    // 计算最晚完成时间
-    vector<int> latest = calculateLatestTime(graph, coursetime, minGraduationTime);
+    // 计算最晚开始时间
+    vector<int> latest = calculateLatestTime(graph, coursetime, minGraduationTime,T);
 
     // 输出结果
-    for (int i = 1; i <= n; ++i) {
+    for (int curr = 1; curr <= n; curr++) {
         // 判断是否在关键路径上
-        bool isCritical = (earliest[i] == latest[i]);
-        cout << earliest[i] << " " << (isCritical ? 1 : 0) << endl;
+        bool isCritical = (earliest[curr] == latest[curr]);
+        cout << eFinish[curr] << " " << (isCritical ? 1 : 0) << endl;
     }
 
     return 0;
