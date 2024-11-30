@@ -17,7 +17,7 @@ struct Graph {
 
 
 
-// 计算最早完成时间
+// 计算最早开始时间
 vector<int> calculateEarliestTime(const Graph& graph, const vector<int>& coursetime,stack<int> &T) {
     vector<int> indegree(graph.vexnum + 1, 0);
     vector<int> earliest(graph.vexnum + 1, 0);
@@ -34,15 +34,17 @@ vector<int> calculateEarliestTime(const Graph& graph, const vector<int>& courset
         if (indegree[i] == 0)
             S.push(i);
 
+    //进行拓扑排序并求出各事件的最早开始时间
     while (!(S.empty())) {
         int curr = S.top();
         S.pop();
-        T.push(curr);
+        T.push(curr);//设置栈存储拓扑排序结果，方便后续进行逆拓扑排序
         for (int j = 0; j<int(graph.vertices[curr].size()); j++) {
             int next = graph.vertices[curr][j];
             indegree[next]--;
             if (indegree[next] == 0)
                 S.push(next);
+            //后续课程的最早开始时间=max（其先前课程最早开始时间+其先前课程学时）
             if (earliest[curr] + coursetime[curr] > earliest[next])
                 earliest[next] = earliest[curr] + coursetime[curr];
         }
@@ -58,14 +60,18 @@ vector<int> calculateLatestTime(const Graph& graph, const vector<int>& coursetim
     while (!(T.empty())) {
         int curr = T.top();
         T.pop();
+        //邻接表非空（不是最后一个完成的课程）
         if (graph.vertices[curr].size()) {
             for (int j = 0; j<int(graph.vertices[curr].size()); j++) {
                 int next = graph.vertices[curr][j];
+                //当前课程的最晚开始时间=min（其后续课程最晚开始时间-当前课程学时）
                 if (latest[next] - coursetime[curr] < latest[curr])
                     latest[curr] = latest[next] - coursetime[curr];
             }
         }
+        //邻接表空（是最后一个完成的课程）
         else
+            //最后一个完成的课程的最晚开始时间就是关键路径长度-该课程学时
             latest[curr] = (minGraduationTime - coursetime[curr]) < latest[curr] ? (minGraduationTime - coursetime[curr]) : latest[curr];
     }
 
@@ -79,6 +85,7 @@ int main() {
     Graph graph(n);                 
     vector<int> coursetime(n + 1);  
 
+    //根据输入确定课程学时（边权）和课程优先关系的有向图邻接表
     for (int i = 1; i <= n; ++i) {
         int ti, ci;
         cin >> ti >> ci;
@@ -94,11 +101,13 @@ int main() {
     // 计算最早开始时间
     stack<int> T;
     vector<int> earliest = calculateEarliestTime(graph, coursetime,T);
+
     // 计算最早完成时间
     vector<int> eFinish(n + 1);
     for (int i = 1; i <= n; i++)
         eFinish[i] = earliest[i] + coursetime[i];
 
+    //计算关键路径长度，即最早完成所有事件的时间
     int minGraduationTime = 0;
     for (int i = 1; i <= n; i++)
         minGraduationTime = eFinish[i] > minGraduationTime ? eFinish[i] : minGraduationTime;

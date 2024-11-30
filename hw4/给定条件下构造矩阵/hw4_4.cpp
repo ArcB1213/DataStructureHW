@@ -2,18 +2,21 @@
 #include <stack>
 using namespace std;
 
+// 顶点信息结构体，包含行和列信息
 struct vexInfo {
 	int row;
 	int col;
 };
 
+// 图结构体
 struct Graph {
-	vexInfo* vex;
-	int** Rarcs;
-	int** Carcs;
-	int vexnum;
+	vexInfo* vex; // 顶点信息数组
+	int** Rarcs;  // 行关系邻接矩阵
+	int** Carcs;  // 列关系邻接矩阵
+	int vexnum;   // 顶点数量
 };
 
+//计算顶点入度函数
 void FindIndegree(Graph G, int* idR,int *idC)
 {
 	for (int c = 1; c <= G.vexnum; c++) {
@@ -31,6 +34,7 @@ void FindIndegree(Graph G, int* idR,int *idC)
 	}
 }
 
+//拓扑排序
 int TopologicalSort(Graph G)
 {
 	int* indegreeR = new int[G.vexnum + 1] {0};
@@ -44,6 +48,7 @@ int TopologicalSort(Graph G)
 			sCol.push(i);
 	}
 
+	//分别对行关系和列关系进行拓扑排序，进而确定各整数在矩阵中的位置
 	int countR = 0, countC = 0;
 	while (!sRow.empty()) {
 		int i = sRow.top();
@@ -110,8 +115,9 @@ int main()
 	}
 	//拓扑排序
 	if (TopologicalSort(G) < 0)
-		cout << -1 << endl;
+		cout << -1 << endl;//有向图中有环，输出-1
 	else {
+		//有向图中无环，按数字的行列信息确定其在矩阵中的位置，并输出矩阵
 		int** result = new int* [G.vexnum];
 		for (int i = 0; i < G.vexnum; i++) {
 			result[i] = new int[G.vexnum];
