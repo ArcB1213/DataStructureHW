@@ -1,0 +1,55 @@
+15 38
+bqj______
+ CJs______
+  dsV______
+  Eem______
+   fQu______
+    GGp______
+    hIx______
+     IBP______
+      jsX______
+       Kki______
+ lFO______
+  MGG______
+  nBe______
+ Oeu______
+  pTo______
+IBP______ is a child of GGp______.
+nBe______ is an ancestor of dsV______.
+jsX______ is a child of IBP______.
+pTo______ is a sibling of CJs______.
+MGG______ is a sibling of MGG______.
+Kki______ is a sibling of GGp______.
+nBe______ is an ancestor of nBe______.
+pTo______ is a sibling of GGp______.
+nBe______ is an ancestor of MGG______.
+nBe______ is a descendant of nBe______.
+hIx______ is the parent of IBP______.
+Eem______ is a child of CJs______.
+lFO______ is a descendant of nBe______.
+Eem______ is an ancestor of Kki______.
+Kki______ is an ancestor of Kki______.
+jsX______ is a child of Kki______.
+hIx______ is an ancestor of Kki______.
+GGp______ is an ancestor of GGp______.
+Oeu______ is the parent of pTo______.
+CJs______ is a child of Kki______.
+jsX______ is the parent of Kki______.
+jsX______ is a descendant of dsV______.
+nBe______ is a child of lFO______.
+CJs______ is a descendant of bqj______.
+hIx______ is a sibling of GGp______.
+hIx______ is a sibling of nBe______.
+nBe______ is a descendant of bqj______.
+bqj______ is a child of bqj______.
+fQu______ is a descendant of bqj______.
+jsX______ is a descendant of Kki______.
+GGp______ is a sibling of dsV______.
+Kki______ is a descendant of GGp______.
+CJs______ is a child of bqj______.
+nBe______ is a descendant of pTo______.
+lFO______ is a child of bqj______.
+Eem______ is an ancestor of Kki______.
+dsV______ is a sibling of dsV______.
+pTo______ is a sibling of GGp______.
+0 0

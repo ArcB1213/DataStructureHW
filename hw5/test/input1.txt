@@ -1,0 +1,57 @@
+19 36
+bqj______
+ CJs______
+ dsV______
+  Eem______
+   fQu______
+    GGp______
+     hIx______
+     IBP______
+      jsX______
+     Kki______
+    lFO______
+     MGG______
+      nBe______
+     Oeu______
+    pTo______
+     Qjx______
+   rxe______
+   SaJ______
+    tfp______
+Eem______ is an ancestor of CJs______.
+GGp______ is the parent of hIx______.
+rxe______ is a sibling of rxe______.
+CJs______ is an ancestor of rxe______.
+CJs______ is a sibling of CJs______.
+rxe______ is an ancestor of rxe______.
+dsV______ is a descendant of bqj______.
+Qjx______ is the parent of Oeu______.
+nBe______ is a descendant of fQu______.
+IBP______ is a sibling of rxe______.
+CJs______ is an ancestor of CJs______.
+pTo______ is a sibling of fQu______.
+Eem______ is the parent of rxe______.
+hIx______ is a sibling of rxe______.
+jsX______ is the parent of dsV______.
+IBP______ is the parent of tfp______.
+hIx______ is a descendant of Oeu______.
+lFO______ is a child of fQu______.
+CJs______ is a child of CJs______.
+hIx______ is a child of hIx______.
+Eem______ is the parent of rxe______.
+rxe______ is a descendant of bqj______.
+MGG______ is a sibling of nBe______.
+hIx______ is a sibling of hIx______.
+lFO______ is a child of CJs______.
+Eem______ is an ancestor of rxe______.
+nBe______ is an ancestor of Eem______.
+lFO______ is the parent of Oeu______.
+Oeu______ is a child of lFO______.
+fQu______ is a descendant of rxe______.
+Oeu______ is the parent of Qjx______.
+hIx______ is a sibling of jsX______.
+jsX______ is an ancestor of jsX______.
+lFO______ is an ancestor of jsX______.
+IBP______ is a sibling of rxe______.
+Oeu______ is a sibling of Kki______.
+0 0
