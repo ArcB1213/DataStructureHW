@@ -1,10 +1,27 @@
-import { ref, reactive } from 'vue'
+import { ref } from 'vue'
+
+type Node = {
+  id: number
+  label: string
+  color?: { background: string; border: string }
+}
+
+type Edge = {
+  from: number
+  to: number
+  weight: number
+  label?: string
+  arrows?: string
+  color?: { color: string }
+  font?: { size: number }
+  width?: number
+}
 
 export function useGraph() {
-  const nodes = ref([])
-  const edges = ref([])
+  const nodes = ref<Node[]>([])
+  const edges = ref<Edge[]>([])
 
-  const initializeGraph = (nodeCount) => {
+  const initializeGraph = (nodeCount: number) => {
     nodes.value = []
     edges.value = []
 
@@ -20,7 +37,7 @@ export function useGraph() {
     }
   }
 
-  const addEdge = (fromId, toId, weight) => {
+  const addEdge = (fromId: number, toId: number, weight: number) => {
     // 检查是否已存在相同的边
     const exists = edges.value.some((edge) => edge.from === fromId && edge.to === toId)
 
@@ -44,7 +61,7 @@ export function useGraph() {
   const loadExampleGraph = () => {
     initializeGraph(6)
 
-    const exampleEdges = [
+    const exampleEdges: Array<{ from: number; to: number; weight: number }> = [
       { from: 0, to: 1, weight: 3 },
       { from: 0, to: 2, weight: 2 },
       { from: 1, to: 3, weight: 2 },
@@ -60,8 +77,8 @@ export function useGraph() {
     })
   }
 
-  const getAdjacencyList = () => {
-    const adjList = {}
+  const getAdjacencyList = (): Record<string, string[]> => {
+    const adjList: Record<string, string[]> = {}
 
     // 初始化所有节点的邻接表
     nodes.value.forEach((node) => {
@@ -70,22 +87,22 @@ export function useGraph() {
 
     // 填充邻接表
     edges.value.forEach((edge) => {
-      const fromLabel = nodes.value.find((n) => n.id === edge.from).label
-      const toLabel = nodes.value.find((n) => n.id === edge.to).label
+      const fromNode = nodes.value.find((n) => n.id === edge.from)
+      const toNode = nodes.value.find((n) => n.id === edge.to)
+      const fromLabel = fromNode?.label ?? `V${edge.from}`
+      const toLabel = toNode?.label ?? `V${edge.to}`
       adjList[fromLabel].push(`${toLabel}(${edge.weight})`)
     })
 
     return adjList
   }
 
-  const highlightCriticalPath = (criticalEdges) => {
-    // 重置所有边的颜色
+  /*  const highlightCriticalPath = (criticalEdges) => {
     edges.value.forEach((edge) => {
       edge.color = { color: '#666' }
       edge.width = 2
     })
 
-    // 高亮关键边
     criticalEdges.forEach((criticalEdge) => {
       const edge = edges.value.find((e) => e.from === criticalEdge.from && e.to === criticalEdge.to)
       if (edge) {
@@ -94,6 +111,7 @@ export function useGraph() {
       }
     })
   }
+  */
 
   return {
     nodes,
@@ -102,6 +120,5 @@ export function useGraph() {
     addEdge,
     loadExampleGraph,
     getAdjacencyList,
-    highlightCriticalPath,
   }
 }

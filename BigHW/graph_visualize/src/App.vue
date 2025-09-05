@@ -39,33 +39,32 @@ import { ref, computed } from 'vue'
 import { useRouter } from 'vue-router'
 import ControlPanel from './components/ControlPanel.vue'
 import GraphVisualization from './components/GraphVisualization.vue'
-import { useGraph } from './composables/useGraph.js'
-import { useTopologySort } from './composables/useTopologySort.js'
-import { useCriticalPath } from './composables/useCriticalPath.js'
+import { useGraph } from './composables/useGraph.ts'
+import { useTopologySort } from './composables/useTopologySort.ts'
+import { useCriticalPath } from './composables/useCriticalPath.ts'
 
 const router = useRouter()
-const graphVisualization = ref<{ updateGraph: () => void } | null>(null)
+type GraphVizExposed = {
+  updateGraph: () => void
+  applyStyleUpdates?: (p: { nodes?: unknown[]; edges?: unknown[] }) => void
+  fadeOutNode?: (
+    id: number | string,
+    opts?: { duration?: number; steps?: number; onDone?: () => void },
+  ) => void
+  resetAllStyles?: () => void
+  highlightCriticalPath?: (edges: Array<{ from: number | string; to: number | string }>) => void
+}
+const graphVisualization = ref<GraphVizExposed | null>(null)
 
-// 最小类型声明，避免隐式 any
-type NodeLike = { id: number | string; label?: string; hidden?: boolean }
-type EdgeLike = { from: number | string; to: number | string; hidden?: boolean }
-type EdgeInput = { from: number | string; to: number | string; weight: number }
+type EdgeInput = { from: number; to: number; weight: number }
 
 // 使用组合式函数
-const {
-  nodes,
-  edges,
-  initializeGraph,
-  addEdge,
-  loadExampleGraph,
-  getAdjacencyList,
-  highlightCriticalPath,
-} = useGraph()
+const { nodes, edges, initializeGraph, addEdge, loadExampleGraph, getAdjacencyList } = useGraph()
 
 const { topologySteps, topologyResult, currentStep, performTopologySort } = useTopologySort()
 const { criticalPathData, calculateCriticalPath } = useCriticalPath()
 
-const adjacencyList = ref(null)
+const adjacencyList = ref<Record<string, string[]> | null>(null)
 
 // 事件处理函数
 const handleInitGraph = (nodeCount: number) => {
@@ -93,34 +92,29 @@ const handleTopologySort = () => {
 
   const result = performTopologySort(nodes.value, edges.value, {
     onInit() {
-      // 确保初始时全部可见
-      ;(nodes.value as unknown as NodeLike[]).forEach((n: NodeLike) => {
-        n.hidden = false
-      })
-      ;(edges.value as unknown as EdgeLike[]).forEach((e: EdgeLike) => {
-        e.hidden = false
-      })
-      if (graphVisualization.value) graphVisualization.value.updateGraph()
+      graphVisualization.value?.resetAllStyles?.()
     },
     onDequeue(id: number | string) {
-      // 隐藏出队节点与其出边
-      nodes.value = (nodes.value as unknown as NodeLike[]).map((n: NodeLike) =>
-        n.id === id ? { ...n, hidden: true } : n,
-      )
-      edges.value = (edges.value as unknown as EdgeLike[]).map((e: EdgeLike) =>
-        e.from === id ? { ...e, hidden: true } : e,
-      )
-      if (graphVisualization.value) graphVisualization.value.updateGraph()
+      // 使用图组件内置的淡出动画，仅淡化不隐藏
+      graphVisualization.value?.fadeOutNode?.(id, {
+        duration: 600,
+        steps: 6,
+        // 不隐藏，动画结束后保持淡化状态
+      })
     },
     onDone() {
       // 排序结束后恢复显示所有节点与边
-      ;(nodes.value as unknown as NodeLike[]).forEach((n: NodeLike) => {
-        n.hidden = false
-      })
-      ;(edges.value as unknown as EdgeLike[]).forEach((e: EdgeLike) => {
-        e.hidden = false
-      })
-      if (graphVisualization.value) graphVisualization.value.updateGraph()
+      // ;(nodes.value as unknown as NodeLike[]).forEach((n: NodeLike) => {
+      //   n.hidden = false
+      //   n.color = { background: '#e3f2fd', border: '#1976d2' }
+      // })
+      // ;(edges.value as unknown as EdgeLike[]).forEach((e: EdgeLike) => {
+      //   e.hidden = false
+      //   e.color = { color: '#666' }
+      //   e.width = 2
+      // })
+      graphVisualization.value?.resetAllStyles?.()
+      //graphVisualization.value?.updateGraph()
     },
   })
   if (!result.success) {
@@ -139,11 +133,14 @@ const handleCriticalPath = () => {
   const result = calculateCriticalPath(nodes.value, edges.value, topologyResult.value)
   if (result.success) {
     // 高亮关键路径
-    highlightCriticalPath(result.criticalEdges)
-    // 触发图形更新
-    if (graphVisualization.value) {
-      graphVisualization.value.updateGraph()
+    graphVisualization.value?.resetAllStyles?.()
+    if (graphVisualization.value?.highlightCriticalPath) {
+      graphVisualization.value.highlightCriticalPath(result.criticalEdges)
     }
+    // 触发图形更新
+    // if (graphVisualization.value) {
+    //   graphVisualization.value.updateGraph()
+    // }
     router.push({ name: 'critical' })
   }
 }

@@ -1,6 +1,7 @@
 {
   "name": "graph_visualize",
   "version": "0.0.0",
+  "main": "dist-electron/main.js",
   "private": true,
   "type": "module",
   "engines": {
@@ -14,7 +15,10 @@
     "build-only": "vite build",
     "type-check": "vue-tsc --build",
     "lint": "eslint . --fix",
-    "format": "prettier --write src/"
+    "format": "prettier --write src/",
+    "electron:dev": "vite --mode electron-dev",
+    "electron:build": "vite build --mode electron && electron-builder",
+    "electron:preview": "npm run build && electron dist-electron/main.js"
   },
   "dependencies": {
     "vis-network": "^10.0.1",
@@ -31,6 +35,8 @@
     "@vue/eslint-config-typescript": "^14.6.0",
     "@vue/test-utils": "^2.4.6",
     "@vue/tsconfig": "^0.7.0",
+    "electron": "^38.0.0",
+    "electron-builder": "^26.0.12",
     "eslint": "^9.31.0",
     "eslint-plugin-vue": "~10.3.0",
     "jiti": "^2.4.2",
@@ -39,8 +45,40 @@
     "prettier": "3.6.2",
     "typescript": "~5.8.0",
     "vite": "^7.0.6",
+    "vite-plugin-electron": "^0.29.0",
     "vite-plugin-vue-devtools": "^8.0.0",
     "vitest": "^3.2.4",
     "vue-tsc": "^3.0.4"
+  },
+  "build": {
+    "appId": "com.example.graph-visualize",
+    "productName": "Graph Visualization App",
+    "directories": {
+      "buildResources": "build",
+      "output": "release"
+    },
+    "files": [
+      "dist/**/*",
+      "dist-electron/**/*"
+    ],
+    "mac": {
+      "icon": "build/icon.icns",
+      "target": "dmg"
+    },
+    "win": {
+      "icon": "build/icon.ico",
+      "target": [
+        {
+          "target": "nsis",
+          "arch": [
+            "x64"
+          ]
+        }
+      ]
+    },
+    "linux": {
+      "icon": "build/icon.png",
+      "target": "AppImage"
+    }
   }
 }
