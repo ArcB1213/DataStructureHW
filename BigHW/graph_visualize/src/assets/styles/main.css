@@ -6,7 +6,7 @@
 
 body {
   font-family: 'Arial', sans-serif;
-  background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+  background: linear-gradient(150deg, #66eacd 0%, #a9ef80 100%);
   min-height: 100vh;
 }
 
@@ -99,13 +99,23 @@ select:focus {
 }
 
 .btn-primary {
-  background: linear-gradient(45deg, #667eea, #764ba2);
+  background: linear-gradient(45deg, #84f3f9, #491ef4);
   color: white;
 }
 
 .btn-primary:hover {
   transform: translateY(-2px);
   box-shadow: 0 5px 15px rgba(102, 126, 234, 0.4);
+}
+
+.btn-critical {
+  background: linear-gradient(45deg, #dc3545, #c88323);
+  color: white;
+}
+
+.btn-critical:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 5px 15px rgba(220, 53, 69, 0.4);
 }
 
 .btn-secondary {

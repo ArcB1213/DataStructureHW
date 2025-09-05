@@ -1,6 +1,6 @@
 <template>
   <div class="result-section">
-    <h4>📋 邻接链表</h4>
+    <h4>🔗 邻接链表</h4>
     <div class="adjacency-list">
       <div v-for="(adj, node) in adjacencyList" :key="node" class="node-item">
         <strong>{{ node }}:</strong>

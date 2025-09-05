@@ -37,7 +37,7 @@
         <button @click="$emit('topology-sort')" class="btn btn-warning">拓扑排序</button>
       </div>
       <div class="input-row">
-        <button @click="$emit('critical-path')" class="btn btn-primary">关键路径</button>
+        <button @click="$emit('critical-path')" class="btn btn-critical">关键路径</button>
         <button @click="$emit('clear-results')" class="btn btn-secondary">清除结果</button>
       </div>
     </div>

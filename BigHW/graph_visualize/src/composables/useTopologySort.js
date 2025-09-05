@@ -5,7 +5,7 @@ export function useTopologySort() {
   const topologyResult = ref([])
   const currentStep = ref(0)
 
-  const performTopologySort = (nodes, edges) => {
+  const performTopologySort = (nodes, edges, options = {}) => {
     topologySteps.value = []
     topologyResult.value = []
     currentStep.value = 0
@@ -37,6 +37,7 @@ export function useTopologySort() {
       indegrees: { ...indegrees },
       queue: [...queue],
       processed: [],
+      dequeued: null,
     })
 
     let stepCount = 1
@@ -66,9 +67,11 @@ export function useTopologySort() {
         indegrees: { ...indegrees },
         queue: [...queue],
         processed: [...result],
+        dequeued: current,
       })
 
-      stepCount++
+      // 计数保留如需展示可用，但避免未使用告警
+      stepCount = stepCount + 1
     }
 
     if (result.length !== nodes.length) {
@@ -81,8 +84,8 @@ export function useTopologySort() {
     topologySteps.value = steps
     topologyResult.value = result.map((id) => `V${id}`)
 
-    // 动画展示过程
-    animateTopologySort()
+    // 动画展示过程（带回调）
+    animateTopologySort(options)
 
     return {
       success: true,
@@ -90,14 +93,38 @@ export function useTopologySort() {
     }
   }
 
-  const animateTopologySort = () => {
+  const animateTopologySort = (options = {}) => {
     currentStep.value = 0
     let step = 0
+    // 初始化回调
+    if (typeof options.onInit === 'function') {
+      try {
+        options.onInit()
+      } catch {
+        /* noop */
+      }
+    }
     const animate = () => {
       if (step < topologySteps.value.length) {
         currentStep.value = step + 1
+        const s = topologySteps.value[step]
+        if (s && s.dequeued != null && typeof options.onDequeue === 'function') {
+          try {
+            options.onDequeue(s.dequeued)
+          } catch {
+            /* noop */
+          }
+        }
         step++
         setTimeout(animate, 1500)
+      } else {
+        if (typeof options.onDone === 'function') {
+          try {
+            options.onDone()
+          } catch {
+            /* noop */
+          }
+        }
       }
     }
     setTimeout(animate, 500)
