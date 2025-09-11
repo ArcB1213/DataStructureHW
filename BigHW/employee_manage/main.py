@@ -1,6 +1,6 @@
 import sys
 from PySide6.QtWidgets import QApplication
-from CRUD import MainWindow
+from GUI import MainWindow
 from model import Department, Organization
 
 def setup_initial_data(organization: Organization):
