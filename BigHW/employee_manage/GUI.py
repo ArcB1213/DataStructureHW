@@ -357,7 +357,7 @@ class MainWindow(QMainWindow):
         self.search_result_text.setText("\n".join(result_lines))
 
     def show_about_dialog(self):
-        QMessageBox.about(self, "关于", "高校组织机构管理系统 V1.3\n\n数据结构课程设计\n作者: 白佳煜\n")
+        QMessageBox.about(self, "关于", "高校组织机构管理系统 V1.3\n\n数据结构课程设计\n作者: Brian Bai\n")
 
     def _update_employee_completer(self):
         """更新人员自动补全数据源：显示为“姓名 (ID: …)”"""
